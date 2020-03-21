@@ -118,6 +118,23 @@ var UIController = (function() {
 
         },
 
+        clearFields: function() {
+            var fields, fieldsArr;
+
+            //so we select all the classes with a certain tag. This is how you select multiple. It returns a list, we need it to be an array
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+
+            //this is how you convert to an array
+            fieldsArr = Array.prototype.slice.call(fields);
+
+            //loops through all of the elements of both divs we arrayed and empties them as follows
+            fieldsArr.forEach(function(current, index, array) {
+
+                current.value = "";
+
+            });
+        },
+
         getDOMstrings: function() {
             return DOMstrings;
         }
@@ -169,6 +186,10 @@ var controller = (function(budgetCtrl, UICtrl) {
         var newItem = budgetCtrl.addItem(input.type, input.description, input.value);
         //33. Add the new item to the UI
         UICtrl.addListItem(newItem, input.type);
+        
+        //clear the fields
+        UICtrl.clearFields();
+        
         //4 . Calculate the budget
 
         //5 Display the budget on the UI
