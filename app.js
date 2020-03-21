@@ -88,7 +88,8 @@ var UIController = (function() {
                 //This returns the information we need as a key value pair type of thing
                 type: document.querySelector(DOMstrings.inputType).value, // will be either inc or exp
                 description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
+                //parse float changes string to number. 
+                value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
             };
            
         },
@@ -127,12 +128,15 @@ var UIController = (function() {
             //this is how you convert to an array
             fieldsArr = Array.prototype.slice.call(fields);
 
-            //loops through all of the elements of both divs we arrayed and empties them as follows
+            //loops through all of the elements of both divs we arrayed and empties them as follows. Each parameter means the following, the current element, current index and the original array (in this case the fieldsArr)
             fieldsArr.forEach(function(current, index, array) {
 
                 current.value = "";
 
             });
+
+            //this will focus on the first element of the array. Which is the description
+            fieldsArr[0].focus();
         },
 
         getDOMstrings: function() {
@@ -174,13 +178,25 @@ var controller = (function(budgetCtrl, UICtrl) {
 
     };
     
-   
+   var updateBudget = function () {
+
+      //1 . Calculate the budget
+
+      //2 return the budget
+
+      //3 Display the budget on the UI
+
+   };
 
     var ctrlAddItem = function() {
         var input, newItem;
 
          // 1. Get the field input data
         var input = UICtrl.getInput();
+        
+        //The code will only work if the description value is not empty, the number is a number and the value is more that 0
+        if (input.description !== "" && !isNaN(input.value) && input.value > 0 ) {
+
         
         //2. add item to the budget controller 
         var newItem = budgetCtrl.addItem(input.type, input.description, input.value);
@@ -190,10 +206,10 @@ var controller = (function(budgetCtrl, UICtrl) {
         //clear the fields
         UICtrl.clearFields();
         
-        //4 . Calculate the budget
+        //calculate and update budget
 
-        //5 Display the budget on the UI
-        
+        updateBudget();
+       }
     };
 
     return {
